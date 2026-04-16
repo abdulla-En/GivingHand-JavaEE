@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <!-- this is an xml file -->
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
+             version="3.2"> <!-- persistence basic build configuration -->
+
+
+    <!-- Hibernate is your builtin ORM provider in the Wildfly server and H2 is builtin DB in you server -->
+    <persistence-unit name="GivingHandEm" transaction-type="JTA"> <!--Entity manager name and JTA server based-->
+        <jta-data-source>java:jboss/datasources/GivingHandDB</jta-data-source> <!--DB connection with GivingHandDB in H2-->
+                <!-- this the (JNDI) of the DB in the standalone.xml file in the server -->
+                <!-- we catch it by {data-source} and by default your DB is ExampleDB -->
+
+
+        <properties>
+            <property name="hibernate.hbm2ddl.auto" value="update"/> <!--Migration-->
+
+            <property name="hibernate.show_sql" value="true"/>  <!-- SQL friendly Console -->
+            <property name="hibernate.format_sql" value="true"/> <!-- +Pretty SQL format -->
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/> <!-- SQL but specific (H2) database Dialect not sqServer or MySql -->
+        </properties>
+    </persistence-unit>
+</persistence>
