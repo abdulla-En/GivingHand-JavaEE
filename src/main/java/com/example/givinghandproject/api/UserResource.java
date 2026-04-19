@@ -1,27 +1,35 @@
 package com.example.givinghandproject.api;
 
-import com.example.givinghandproject.dto.User.UserLoginRequest;
+
 import com.example.givinghandproject.dto.User.UserRegisterRequest;
 import com.example.givinghandproject.dto.User.UserResponse;
 import com.example.givinghandproject.dto.User.UserUpdateRequest;
 import com.example.givinghandproject.entity.User;
 import com.example.givinghandproject.mapper.UserMapper;
 import com.example.givinghandproject.service.UserService;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.SecurityContext;
 
 import java.util.Map;
 
 @Path("/user")
+@RequestScoped
+@RolesAllowed({"Organization", "Donor"})
 public class UserResource {
 
     @Inject
     UserService userService;
 
     @POST
+    @PermitAll
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -35,21 +43,25 @@ public class UserResource {
 
     @POST
     @Path("/login")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @RolesAllowed({"Organization", "Donor"})
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(@Valid UserLoginRequest request)
-    {
-        String userName = userService.login(request);
-        return Response.status(200).entity(Map.of("message" , "Welcome "+userName)).build();
+    public Response login(@Context SecurityContext securityContext) {
+        String email = securityContext.getUserPrincipal().getName(); // catch the mail
+        String name = userService.login(email);
+
+        return Response.status(200).entity(Map.of("message" , "Welcome "+name)).build();
     }
 
     @PUT
-    @Path("/update-profile/{id}")
+    @Path("/update-profile")
+    @RolesAllowed({"Organization", "Donor"})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response UpdateProfile(@PathParam("id") Long id, @Valid UserUpdateRequest request)
-    {
-        Long userId = userService.update(id , request);
-        return Response.status(200).entity(Map.of("message" , "User with id "+userId+" updated successfully")).build();
+    public Response updateProfile(@Context SecurityContext securityContext, @Valid UserUpdateRequest request) {
+
+        String email = securityContext.getUserPrincipal().getName();
+        String userId = userService.update(email, request);
+
+        return Response.ok(Map.of("message", "Your profile has been updated successfully")).build();
     }
 }

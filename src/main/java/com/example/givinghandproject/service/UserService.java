@@ -1,7 +1,6 @@
 package com.example.givinghandproject.service;
 
 import com.example.givinghandproject.dao.UserRepo;
-import com.example.givinghandproject.dto.User.UserLoginRequest;
 import com.example.givinghandproject.dto.User.UserRegisterRequest;
 import com.example.givinghandproject.dto.User.UserUpdateRequest;
 import com.example.givinghandproject.entity.User;
@@ -18,6 +17,7 @@ public class UserService {
     @Inject
     UserRepo repository;
 
+    // don't forget here we just do a Business-validation
     public User register(UserRegisterRequest request)
     {
         // mail check
@@ -41,37 +41,32 @@ public class UserService {
         return user ;
     }
 
-    public String login (UserLoginRequest request)
+    public String login (String  email)
     {
-        // don't forget here we just do a Business-validation
 
-        User user = repository.getByEmail(request.getEmail())
+        User user = repository.getByEmail(email)
                 .orElseThrow(() -> new BusinessException("email", "This email is not registered"));
-
-        if (!BCrypt.checkpw(request.getPassword(), user.getPassword())) {
-            throw new BusinessException("password", "Invalid password, please try again");
-        }
 
         return user.getFullName().trim().split(" ")[0];
 
     }
 
     // not secure version before security phase
-    public Long update (Long id ,UserUpdateRequest request)
+    public String update (String email , UserUpdateRequest request)
     {
         // get user
-        User user = repository.getById(id)
-                .orElseThrow(()->new BusinessException("user" , "there is o user with id : "+id));
+        User user = repository.getByEmail(email)
+                .orElseThrow(()->new BusinessException("user" , "there is o user with email : "+email));
         // Mapper update
         UserMapper.updateUserFromDto(user,request);
 
         // ensuring
         repository.update(user);
 
-        return user.getId();
+        return user.getId().toString();
     }
 }
 
 // getemail() -> return optional<user> singleResult or empty
 // ifPresent(task) -> check if there is a result   [register used]
-// orElseThrow(task) -> check if empty             [Login used]
+// orElseThrow(task) -> check if empty       

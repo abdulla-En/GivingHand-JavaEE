@@ -1,0 +1,28 @@
+<web-app>
+    <context-param>
+        <param-name>resteasy.role.based.security</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>GivingHand APIs</web-resource-name>
+            <!-- Those only I need protect for now -->
+            <url-pattern>/api/user/login</url-pattern>
+            <url-pattern>/api/user//update-profile</url-pattern>
+            <!-- -->
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>Organization</role-name>
+            <role-name>Donor</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>ApplicationRealm</realm-name>
+    </login-config>
+
+    <security-role><role-name>Organization</role-name></security-role>
+    <security-role><role-name>Donor</role-name></security-role>
+</web-app>

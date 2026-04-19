@@ -1,0 +1,3 @@
+<jboss-web>
+    <security-domain>other</security-domain> <!-- I use the default app sec domain but I make it use diff Realm source -->
+</jboss-web>
