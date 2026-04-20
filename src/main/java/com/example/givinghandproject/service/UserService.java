@@ -63,7 +63,7 @@ public class UserService {
         // ensuring
         repository.update(user);
 
-        return user.getId().toString();
+        return user.getFullName();
     }
 }
 
