@@ -1,0 +1,25 @@
+$kind: http-request
+name: Update Profile
+method: PUT
+url: '{{baseUrl}}/api/user/update-profile'
+order: 3000
+description: |-
+  Updates the authenticated user's name and bio.
+  Requires Basic Auth credentials (email and password).
+auth:
+  type: basic
+  credentials:
+    - key: username
+      value: '{{email}}'
+    - key: password
+      value: '{{password}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Jane Doe",
+      "bio": "Updated bio text"
+    }

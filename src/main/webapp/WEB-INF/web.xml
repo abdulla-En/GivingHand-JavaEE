@@ -1,4 +1,7 @@
-<web-app>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
     <context-param>
         <param-name>resteasy.role.based.security</param-name>
         <param-value>true</param-value>
@@ -9,7 +12,7 @@
             <web-resource-name>GivingHand APIs</web-resource-name>
             <!-- Those only I need protect for now -->
             <url-pattern>/api/user/login</url-pattern>
-            <url-pattern>/api/user//update-profile</url-pattern>
+            <url-pattern>/api/user/update-profile</url-pattern>
             <!-- -->
         </web-resource-collection>
         <auth-constraint>
@@ -20,7 +23,7 @@
 
     <login-config>
         <auth-method>BASIC</auth-method>
-        <realm-name>ApplicationRealm</realm-name>
+        <realm-name>GivingHandRealm</realm-name>  <!-- your new Realm -->
     </login-config>
 
     <security-role><role-name>Organization</role-name></security-role>

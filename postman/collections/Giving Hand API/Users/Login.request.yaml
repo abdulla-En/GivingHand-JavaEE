@@ -1,0 +1,16 @@
+$kind: http-request
+name: Login
+method: POST
+url: '{{baseUrl}}/api/user/login'
+order: 2000
+description: |-
+  Logs in an existing user using Basic Auth credentials.
+  Requires Basic Auth credentials (email and password).
+  Returns a welcome message with the user's name.
+auth:
+  type: basic
+  credentials:
+    - key: username
+      value: '{{email}}'
+    - key: password
+      value: '{{password}}'

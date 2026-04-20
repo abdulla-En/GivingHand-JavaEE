@@ -33,9 +33,7 @@ public class UserResource {
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    //
-    public Response register(@Valid UserRegisterRequest request)
-    {
+    public Response register(@Valid UserRegisterRequest request) {
         User user = userService.register(request);
         UserResponse response = UserMapper.fromUser(user);
         return Response.status(Response.Status.CREATED).entity(response).build();
@@ -49,7 +47,7 @@ public class UserResource {
         String email = securityContext.getUserPrincipal().getName(); // catch the mail
         String name = userService.login(email);
 
-        return Response.status(200).entity(Map.of("message" , "Welcome "+name)).build();
+        return Response.status(200).entity(Map.of("message", "Welcome " + name)).build();
     }
 
     @PUT
@@ -60,7 +58,6 @@ public class UserResource {
     public Response updateProfile(@Context SecurityContext securityContext, @Valid UserUpdateRequest request) {
 
         String email = securityContext.getUserPrincipal().getName();
-        String userId = userService.update(email, request);
 
         return Response.ok(Map.of("message", "Your profile has been updated successfully")).build();
     }
