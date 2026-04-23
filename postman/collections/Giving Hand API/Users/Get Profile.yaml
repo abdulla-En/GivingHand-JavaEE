@@ -1,0 +1,19 @@
+$kind: http-request
+name: Get Current User
+method: GET
+url: '{{baseUrl}}/api/user'
+order: 1000
+description: |-
+  Retrieves the details of the currently authenticated user.
+  
+  - Available to any authenticated user (`@PermitAll`).
+  - No request body is needed.
+  - On success, returns the user object in JSON format (`application/json`).
+  - Uses the authentication principal (email) from the security context to fetch the data.
+auth:
+  type: basic
+  credentials:
+    - key: username
+      value: '{{email}}'
+    - key: password
+      value: '{{password}}'

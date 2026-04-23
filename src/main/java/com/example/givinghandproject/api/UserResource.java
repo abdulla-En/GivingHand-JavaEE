@@ -5,7 +5,7 @@ import com.example.givinghandproject.dto.User.UserRegisterRequest;
 import com.example.givinghandproject.dto.User.UserResponse;
 import com.example.givinghandproject.dto.User.UserUpdateRequest;
 import com.example.givinghandproject.entity.User;
-import com.example.givinghandproject.mapper.UserMapper;
+import com.example.givinghandproject.mapper.user.UserMapper;
 import com.example.givinghandproject.service.UserService;
 import com.example.givinghandproject.utilities.exceptions.BusinessException;
 import jakarta.annotation.security.PermitAll;
@@ -21,6 +21,7 @@ import jakarta.ws.rs.core.SecurityContext;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Path("/user")
@@ -44,12 +45,9 @@ public class UserResource {
 
     @POST
     @Path("/login")
-    @RolesAllowed({"Organization", "Donor"})
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(@Context SecurityContext securityContext , @Context HttpServletRequest request) {
-        if(securityContext.getUserPrincipal() == null )
-            throw new BusinessException("credentials","invalid credentials");
-
         String jsonId = request.getSession(true).getId();  // catch jsonId token as string to retrieve
         String email = securityContext.getUserPrincipal().getName(); // catch the mail from token
         String name = userService.login(email);
@@ -71,7 +69,40 @@ public class UserResource {
         String email = securityContext.getUserPrincipal().getName();
         String name = userService.update(email , request);
 
-        return Response.ok(Map.of("message", "Congrats "+name+" you profile updated!")).build();
+        return Response.ok(Map.of("message", "Congrats "+name+" your profile updated!")).build();
     }
 
+
+    @DELETE
+    @Path("/delete")
+    @RolesAllowed({"Organization", "Donor"})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteProfile(@Context SecurityContext securityContext)
+    {
+        String email = securityContext.getUserPrincipal().getName();
+        String name = userService.delete(email);
+
+        return Response.ok(Map.of("message" , "By By "+name+" we will missed you ")).build();
+    }
+
+    @GET
+    @Path("/users")
+    @RolesAllowed("Admin")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllUsers()
+    {
+        List<UserResponse> userResponseList = userService.getAllUser();
+        return Response.ok(Map.of("users" , userResponseList)).build();
+    }
+
+    @GET
+    @Path("/user")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response me(@Context SecurityContext securityContext)
+    {
+        String email = securityContext.getUserPrincipal().getName();
+        User user = userService.getUser(email);
+        return Response.ok(user).build();
+    }
 }

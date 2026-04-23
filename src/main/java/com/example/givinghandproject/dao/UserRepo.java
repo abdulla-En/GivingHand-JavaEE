@@ -5,7 +5,9 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Stateless
@@ -45,10 +47,20 @@ public class UserRepo {
         }
     }
 
-    //delete
-//    public void delete(Long id)
-//    {
-//        User user = getById(id).get();
-//        em.remove(user);
-//    }
+    // delete user by email
+    public boolean delete (User user ) {
+        try {
+            em.remove(user);
+            return true;
+        } catch (PersistenceException e) {
+            return false;
+        }
+    }
+
+    // Get all users
+    public List<User> getAllUsers()
+    {
+        return em.createQuery("SELECT u from User u" , User.class)
+                .getResultList();
+    }
 }

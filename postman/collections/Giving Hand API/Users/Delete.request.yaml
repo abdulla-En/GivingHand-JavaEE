@@ -1,0 +1,20 @@
+$kind: http-request
+name: Delete
+method: DELETE
+url: '{{baseUrl}}/api/user/delete'
+order: 4000
+description: |-
+  Deletes the authenticated user's account permanently.
+  Requires Basic Auth credentials (email and password).
+
+  - Available to users with role `"Donor"` or `"Organization"`.
+  - No request body is needed.
+  - On success, returns a farewell message with the user's name.
+  - This action is **irreversible** — the account cannot be recovered after deletion.
+auth:
+  type: basic
+  credentials:
+    - key: username
+      value: '{{email}}'
+    - key: password
+      value: '{{password}}'

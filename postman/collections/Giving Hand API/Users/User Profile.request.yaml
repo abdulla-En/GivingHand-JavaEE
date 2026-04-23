@@ -1,0 +1,9 @@
+$kind: http-request
+name: User Profile
+description: |2-
+    
+  StartFragmentRetrieves the authenticated user's profile information  
+  Requires Basic Auth credentials (email and password).EndFragment
+url: ""
+method: GET
+order: 346065946546695

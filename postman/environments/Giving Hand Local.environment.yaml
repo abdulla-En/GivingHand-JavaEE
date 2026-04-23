@@ -1,14 +1,11 @@
 name: Giving Hand Local
 values:
   - key: baseUrl
+    enabled: true
     value: 'http://localhost:8080/GivingHandProject-1.0-SNAPSHOT'
-    enabled: true
-    type: default
-  - key: email
-    value: ''
-    enabled: true
-    type: default
   - key: password
-    value: ''
     enabled: true
-    type: secret
+    value: ''
+  - key: email
+    enabled: true
+    value: ''

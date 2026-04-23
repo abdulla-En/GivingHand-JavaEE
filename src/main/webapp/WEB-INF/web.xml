@@ -3,11 +3,15 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
     <context-param>
+        <!-- respect the annotation and take it in consideration -->
         <param-name>resteasy.role.based.security</param-name>
         <param-value>true</param-value>
     </context-param>
 
+    <!-- Wildfly is responsible for protect : -->
     <security-constraint>
+
+        <!-- These collection of URLs[web collection] : -->
         <web-resource-collection>
             <web-resource-name>GivingHand APIs</web-resource-name>
             <!-- Those only I need protect for now -->
@@ -15,17 +19,30 @@
             <url-pattern>/api/user/update-profile</url-pattern>
             <!-- -->
         </web-resource-collection>
+
+        <!-- Guest book: -->
         <auth-constraint>
             <role-name>Organization</role-name>
             <role-name>Donor</role-name>
+            <role-name>Admin</role-name>
         </auth-constraint>
+
     </security-constraint>
 
+    <!-- Inspection method -->
     <login-config>
         <auth-method>BASIC</auth-method>
         <realm-name>GivingHandRealm</realm-name>  <!-- your new Realm -->
     </login-config>
 
+    <!-- just a roles declaration for server to understand them when see them   -->
     <security-role><role-name>Organization</role-name></security-role>
     <security-role><role-name>Donor</role-name></security-role>
+    <security-role><role-name>Admin</role-name></security-role>
+
+    <!-- Redirection in case of error-->
+    <error-page>
+        <error-code>401</error-code>
+        <location>/api/server-errors/unauthorized</location> <!-- not an error just location expected a physical path not endpointURL -->
+    </error-page>
 </web-app>

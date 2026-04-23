@@ -1,4 +1,4 @@
-package com.example.givinghandproject.mapper;
+package com.example.givinghandproject.mapper.exceptions;
 
 import com.example.givinghandproject.dto.ErrorDTO;
 import jakarta.validation.ConstraintViolation;

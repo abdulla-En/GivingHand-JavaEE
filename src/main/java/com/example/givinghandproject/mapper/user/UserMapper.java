@@ -1,4 +1,4 @@
-package com.example.givinghandproject.mapper;
+package com.example.givinghandproject.mapper.user;
 
 import com.example.givinghandproject.dto.User.UserRegisterRequest;
 import com.example.givinghandproject.dto.User.UserResponse;

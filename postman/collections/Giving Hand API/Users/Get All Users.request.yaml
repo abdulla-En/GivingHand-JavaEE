@@ -1,0 +1,17 @@
+$kind: http-request
+name: Get All Users
+method: GET
+url: "{{baseUrl}}/api/user/users"
+order: 5000
+description: |-
+  Retrieves a list of all registered users in the system.  
+  Requires Basic Auth credentials (email and password).
+
+  - Restricted to users with role `"Admin"` only.
+      
+  - Returns a `users` array where each object contains: `id`, `fullName`, `email`, `birthDate`, `bio`, and `role`.
+auth:
+  type: basic
+  credentials:
+    username: "{{email}}"
+    password: "{{password}}"

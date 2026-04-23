@@ -1,4 +1,4 @@
-package com.example.givinghandproject.mapper;
+package com.example.givinghandproject.mapper.exceptions;
 
 import jakarta.ws.rs.ForbiddenException;
 import jakarta.ws.rs.core.Response;
@@ -11,7 +11,7 @@ public class ForbiddenExceptionMapper implements ExceptionMapper<ForbiddenExcept
     @Override
     public Response toResponse(ForbiddenException exception)
     {
-        return Response.status(Response.Status.UNAUTHORIZED).entity(Map.of(
+        return Response.status(Response.Status.FORBIDDEN).entity(Map.of(
                 "ACCESS_DENIED" ,"This is outside your access rights"))
                 .build();
     }

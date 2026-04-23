@@ -2,15 +2,17 @@ package com.example.givinghandproject.service;
 
 import com.example.givinghandproject.dao.UserRepo;
 import com.example.givinghandproject.dto.User.UserRegisterRequest;
+import com.example.givinghandproject.dto.User.UserResponse;
 import com.example.givinghandproject.dto.User.UserUpdateRequest;
 import com.example.givinghandproject.entity.User;
-import com.example.givinghandproject.mapper.UserMapper;
+import com.example.givinghandproject.mapper.user.UserMapper;
 import com.example.givinghandproject.utilities.exceptions.BusinessException;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Stateless
 public class UserService {
@@ -63,7 +65,38 @@ public class UserService {
         // ensuring
         repository.update(user);
 
-        return user.getFullName();
+        return user.getFullName().trim().split(" ")[0];
+    }
+
+    public String delete (String email)
+    {
+        // get user
+        User user = repository.getByEmail(email)
+                .orElseThrow(()-> new BusinessException("user" , "there is o user with email : "+email));
+        // try delete
+        if(repository.delete(user))
+             return user.getFullName().trim().split(" ")[0];
+        throw new BusinessException("Delete Transaction ","problem occurred in delete transaction ");
+
+    }
+
+    public List<UserResponse> getAllUser()
+    {
+        List<User> users = repository.getAllUsers();
+        if(users.isEmpty())
+            // Although it isn't a business error
+            throw new BusinessException("Admin Message","There is no users yet!");
+
+        // magic of streaming
+        return users.stream()
+                .map(UserMapper::fromUser)
+                .toList();
+    }
+
+    public User getUser(String email)
+    {
+        return repository.getByEmail(email)
+                .orElseThrow(()-> new BusinessException("user" , "there is o user with email : "+email));
     }
 }
 

@@ -6,7 +6,10 @@ order: 2000
 description: |-
   Logs in an existing user using Basic Auth credentials.
   Requires Basic Auth credentials (email and password).
-  Returns a welcome message with the user's name.
+
+  - On success, returns a welcome message with the user's name and a session `token`.
+  - The `token` is a session ID that can be used for subsequent authenticated requests.
+  - Available to all users .
 auth:
   type: basic
   credentials:
