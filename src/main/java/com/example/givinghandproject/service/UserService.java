@@ -1,6 +1,6 @@
 package com.example.givinghandproject.service;
 
-import com.example.givinghandproject.dao.UserRepo;
+import com.example.givinghandproject.dao.UserDAO;
 import com.example.givinghandproject.dto.User.UserRegisterRequest;
 import com.example.givinghandproject.dto.User.UserResponse;
 import com.example.givinghandproject.dto.User.UserUpdateRequest;
@@ -17,7 +17,7 @@ import java.util.List;
 @Stateless
 public class UserService {
     @Inject
-    UserRepo repository;
+    UserDAO repository;
 
     // don't forget here we just do a Business-validation
     public User register(UserRegisterRequest request)

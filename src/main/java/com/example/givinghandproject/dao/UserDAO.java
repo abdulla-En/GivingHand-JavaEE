@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Stateless
-public class UserRepo {
+public class UserDAO {
     @PersistenceContext(unitName = "GivingHandEm")
     EntityManager em;
 
@@ -27,7 +27,7 @@ public class UserRepo {
         em.merge(user);
     }
 
-    //Get by id
+    //Get by id -> no usage after Jaas at all
     public Optional<User> getById(Long id)
     {
 
@@ -64,3 +64,10 @@ public class UserRepo {
                 .getResultList();
     }
 }
+
+
+// getSingleResult() -> if no result throw NoResultException [handle it with optional]
+// and in service we use [ifPresent] or [orElseThrow] depend on you search for result or no result
+
+// getResultList() -> more flexible no need optional [return empty if no result] \/_\/
+
