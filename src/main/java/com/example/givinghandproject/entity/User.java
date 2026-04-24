@@ -1,6 +1,7 @@
 package com.example.givinghandproject.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.example.givinghandproject.utilities.enums.UserType;
 import jakarta.persistence.*;
@@ -32,6 +33,16 @@ public class User {
     @Column(name = "Role" , nullable = false)
     @Enumerated(EnumType.STRING) // saved in DB as String
     private UserType role;
+
+    // Navigation properties
+    @OneToMany(mappedBy = "organization")
+    private List<Campaign> campaigns;
+
+    @OneToMany(mappedBy = "organization")
+    private List<Warehouse> warehouses;
+
+    @OneToMany(mappedBy = "donor")
+    private List<Donation> donations;
 
     // JPA have to use a default constructor
     public User(){}
