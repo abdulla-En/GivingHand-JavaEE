@@ -8,7 +8,6 @@ public class UserUpdateRequest {
     private String name ;
     private String bio;
 
-    public UserUpdateRequest(){}
 
     public void setBio(String bio) {
         this.bio = bio;

@@ -16,6 +16,10 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemCategory category;
 
+    // JPA have to use a default constructor
+    public Item(){}
+
+
     public Long getId() {
         return id;
     }

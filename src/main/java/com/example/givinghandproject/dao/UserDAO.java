@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Stateless
 public class UserDAO {
-    @PersistenceContext(unitName = "GivingHandEm")
+    private @PersistenceContext(unitName = "GivingHandEm")
     EntityManager em;
 
     // insert

@@ -36,6 +36,10 @@ public class CampaignItem {
         this.campaign = campaign;
     }
 
+    // JPA have to use a default constructor
+    public CampaignItem(){}
+
+
     public Item getItem() {
         return item;
     }

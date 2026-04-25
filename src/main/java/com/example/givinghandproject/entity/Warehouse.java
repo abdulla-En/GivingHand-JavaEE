@@ -22,6 +22,10 @@ public class Warehouse {
     @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
     private List<Inventory> inventoryList = new ArrayList<>();
 
+    // JPA have to use a default constructor
+    public Warehouse(){}
+
+
     public Long getId() {
         return id;
     }

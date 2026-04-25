@@ -26,6 +26,10 @@ public class Campaign {
     @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CampaignItem> needList = new ArrayList<>();
 
+    // JPA have to use a default constructor
+    public Campaign(){}
+
+
     public Long getId() {
         return id;
     }

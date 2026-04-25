@@ -20,6 +20,10 @@ public class Inventory {
     private int quantity;
     private int lowStockThreshold;
 
+    // JPA have to use a default constructor
+    public Inventory(){}
+
+
     public Long getId() {
         return id;
     }

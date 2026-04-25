@@ -17,8 +17,6 @@ public class UserResponse {
 
     private UserType role;
 
-    // JPA have to use a default constructor
-    public UserResponse(){}
 
     // Getters and Setters to JSON Ser&Des
 

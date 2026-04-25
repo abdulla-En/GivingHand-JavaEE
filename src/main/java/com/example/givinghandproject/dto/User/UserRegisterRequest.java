@@ -31,8 +31,6 @@ public class UserRegisterRequest {
     @NotNull(message = "Role Required")
     private UserType role;
 
-    // JPA have to use a default constructor
-    public UserRegisterRequest(){}
 
     // Getters and Setters to JSON Ser&Des
 

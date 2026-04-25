@@ -23,6 +23,10 @@ public class Donation {
     @Enumerated(EnumType.STRING)
     private DonationStatus status = DonationStatus.COMMITTED;
 
+    // JPA have to use a default constructor
+    public Donation(){}
+
+
     public Long getId() {
         return id;
     }
