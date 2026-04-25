@@ -5,10 +5,12 @@ import com.example.givinghandproject.utilities.enums.CampaignStatus;
 import com.example.givinghandproject.utilities.enums.ItemCategory;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
+import java.util.Optional;
 
 @Stateless
 public class CampaignDAO {
@@ -21,6 +23,16 @@ public class CampaignDAO {
 
     public Campaign findById(Long id) {
         return em.find(Campaign.class, id);
+    }
+    public Optional<Campaign> finByTitle(String title){
+        try {
+            Campaign campaign = em.createQuery("SELECT c FROM Campaign c WHERE c.title = :title", Campaign.class)
+                    .setParameter("title", title)
+                    .getSingleResult();
+            return Optional.of(campaign);
+        }catch (NoResultException e){
+            return Optional.empty();
+        }
     }
 
     public void update(Campaign campaign) {

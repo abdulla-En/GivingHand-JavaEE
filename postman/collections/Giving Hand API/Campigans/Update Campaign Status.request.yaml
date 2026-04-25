@@ -1,0 +1,18 @@
+$kind: http-request
+name: Update Campaign Status
+description: |-
+  Updates the status of a campaign by its ID.
+  Requires Organization or Admin role.
+  The body must be a plain text value: OPEN, PAUSED, or COMPLETED.
+method: PATCH
+url: '{{baseUrl}}/api/campaigns/{{campaignId}}/status'
+order: 4427783625246973
+headers:
+  - key: Cookie
+    value: 'JSESSIONID={{token}}'
+    description: Session cookie for authentication (Organization or Admin role required)
+  - key: Content-Type
+    value: text/plain
+body:
+  type: text
+  content: OPEN

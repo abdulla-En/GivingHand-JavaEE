@@ -4,6 +4,7 @@ import com.example.givinghandproject.entity.CampaignItem;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceException;
 
 @Stateless
 public class CampaignItemDAO {
@@ -16,5 +17,13 @@ public class CampaignItemDAO {
 
     public void update(CampaignItem campaignItem) {
         em.merge(campaignItem);
+    }
+    public boolean delete (CampaignItem campaignItem) {
+        try {
+            em.remove(campaignItem);
+            return true;
+        } catch (PersistenceException e) {
+            return false;
+        }
     }
 }

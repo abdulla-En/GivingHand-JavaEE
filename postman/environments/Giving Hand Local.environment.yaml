@@ -2,7 +2,7 @@ name: Giving Hand Local
 values:
   - key: baseUrl
     enabled: true
-    value: 'http://localhost:8080/GivingHandProject-1.0-SNAPSHOT'
+    value: 'http://localhost:8182/GivingHandProject-1.0-SNAPSHOT'
   - key: password
     enabled: true
     value: ''

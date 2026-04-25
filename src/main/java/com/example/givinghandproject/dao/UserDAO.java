@@ -48,7 +48,7 @@ public class UserDAO {
     }
 
     // delete user by email
-    public boolean delete (User user ) {
+    public boolean delete (User user) {
         try {
             em.remove(user);
             return true;

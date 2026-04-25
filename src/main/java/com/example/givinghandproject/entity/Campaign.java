@@ -13,6 +13,7 @@ public class Campaign {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true , nullable = false)
     private String title;
     private String description;
 

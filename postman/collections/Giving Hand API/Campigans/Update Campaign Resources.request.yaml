@@ -1,0 +1,32 @@
+$kind: http-request
+name: Update Campaign Resources
+description: |-
+  Updates the resource needs of a campaign by its ID.
+  Requires Organization or Admin role.
+
+  The `updateOperation` field controls the operation:
+  - ADD: Add a new item need. Use `ItemId` and `targetQuantity`.
+  - UPDATE: Update an existing item need. Use `campaignItemId` and `targetQuantity`.
+  - DELETE: Remove an existing item need. Use `campaignItemId` only.
+
+  Examples:
+    ADD:    { "updateOperation": "ADD",    "ItemId": 3,           "targetQuantity": 20 }
+    UPDATE: { "updateOperation": "UPDATE", "campaignItemId": 5,   "targetQuantity": 35 }
+    DELETE: { "updateOperation": "DELETE", "campaignItemId": 5 }
+method: PUT
+url: '{{baseUrl}}/api/campaigns/{{campaignId}}/resources'
+order: 4488742595250301
+headers:
+  - key: Cookie
+    value: 'JSESSIONID={{token}}'
+    description: Session cookie for authentication (Organization or Admin role required)
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "updateOperation": "ADD",
+      "ItemId": 3,
+      "targetQuantity": 20
+    }

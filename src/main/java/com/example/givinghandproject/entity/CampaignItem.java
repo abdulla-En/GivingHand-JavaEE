@@ -1,6 +1,7 @@
 package com.example.givinghandproject.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "campaign_items")
@@ -17,6 +18,7 @@ public class CampaignItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
+    @NotNull(message = "you should customize target quantity")
     private int targetQuantity;
     private int receivedQuantity = 0;
 

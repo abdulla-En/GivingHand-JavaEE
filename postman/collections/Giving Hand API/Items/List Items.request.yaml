@@ -1,0 +1,5 @@
+$kind: http-request
+method: GET
+url: '{{baseUrl}}/api/items'
+order: 3805076207947413
+description: Returns a list of all available items.

@@ -1,0 +1,25 @@
+$kind: http-request
+name: Create Campaign
+description: |-
+  Creates a new campaign. Requires Organization role.
+  The request must include a valid session cookie (JSESSIONID).
+method: POST
+url: '{{baseUrl}}/api/campaigns'
+order: 1777103267329
+headers:
+  - key: Cookie
+    value: 'JSESSIONID={{token}}'
+    description: Session cookie for authentication (Organization role required)
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "title": "Winter Aid Campaign",
+      "description": "Providing warm clothes and food for winter",
+      "needs": [
+        { "itemId": 1, "targetQuantity": 100 },
+        { "itemId": 2, "targetQuantity": 50 }
+      ]
+    }

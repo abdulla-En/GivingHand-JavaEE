@@ -1,0 +1,13 @@
+$kind: http-request
+name: Get All Campaigns
+description: |-
+  Retrieves all campaigns. No authentication required.
+  Optionally filter by category using the `category` query parameter.
+method: GET
+url: '{{baseUrl}}/api/campaigns'
+order: 4249466487107352
+queryParams:
+  - key: category
+    value: ''
+    description: 'Optional. Filter campaigns by category (e.g. FOOD, CLOTHES).'
+    disabled: true

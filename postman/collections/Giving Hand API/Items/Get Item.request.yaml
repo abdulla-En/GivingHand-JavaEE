@@ -1,0 +1,5 @@
+$kind: http-request
+method: GET
+url: '{{baseUrl}}/api/items/{{itemId}}'
+order: 3986748298841664
+description: Returns a single item by its ID. Replace `{{itemId}}` with the actual item ID.
