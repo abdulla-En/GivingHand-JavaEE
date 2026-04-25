@@ -13,10 +13,9 @@ public class Warehouse {
     private Long id;
 
     private String name;
-    private String location;
 
-    @ManyToOne
-    @JoinColumn(name = "organization_id")
+    @OneToOne
+    @JoinColumn(name = "organization_id") // ده العمود اللي هيكون فيه الـ Foreign Key
     private User organization;
 
     @OneToMany(mappedBy = "warehouse", cascade = CascadeType.ALL)
@@ -42,13 +41,6 @@ public class Warehouse {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
     public User getOrganization() {
         return organization;

@@ -20,9 +20,9 @@ public class WarehouseDAO {
         return em.find(Warehouse.class, id);
     }
 
-    public List<Warehouse> findByOrganization(Long orgId) {
+    public Warehouse findByOrganization(Long orgId) {
         return em.createQuery("SELECT w FROM Warehouse w WHERE w.organization.id = :orgId", Warehouse.class)
                 .setParameter("orgId", orgId)
-                .getResultList();
+                .getSingleResult();
     }
 }

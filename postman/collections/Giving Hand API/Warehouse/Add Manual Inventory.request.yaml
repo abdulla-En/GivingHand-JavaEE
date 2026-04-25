@@ -1,0 +1,17 @@
+$kind: http-request
+name: Add Manual Inventory
+method: POST
+url: '{{baseUrl}}/api/warehouse/inventory'
+order: 4000
+description: Manually adds or updates inventory for an item in the organization's warehouse. Requires Organization role and an existing warehouse setup.
+headers:
+  - key: Cookie
+    value: 'JSESSIONID={{token}}'
+body:
+  type: json
+  content: |-
+    {
+      "itemId": 1,
+      "quantity": 100,
+      "threshold": 10
+    }

@@ -47,8 +47,8 @@ public class User {
     @OneToMany(mappedBy = "organization")
     private List<Campaign> campaigns;
 
-    @OneToMany(mappedBy = "organization")
-    private List<Warehouse> warehouses;
+    @OneToOne(mappedBy = "organization", cascade = CascadeType.ALL)
+    private Warehouse warehouse;
 
     @OneToMany(mappedBy = "donor")
     private List<Donation> donations;
@@ -93,12 +93,12 @@ public class User {
         this.campaigns = campaigns;
     }
 
-    public List<Warehouse> getWarehouses() {
-        return warehouses;
+    public Warehouse getWarehouse() {
+        return warehouse;
     }
 
-    public void setWarehouses(List<Warehouse> warehouses) {
-        this.warehouses = warehouses;
+    public void setWarehouses(Warehouse warehouses) {
+        this.warehouse = warehouses;
     }
 
     public List<Donation> getDonations() {

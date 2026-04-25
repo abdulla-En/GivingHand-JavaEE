@@ -7,6 +7,7 @@ import com.example.givinghandproject.dto.donation.DonationRequestDTO;
 import com.example.givinghandproject.entity.CampaignItem;
 import com.example.givinghandproject.entity.Donation;
 import com.example.givinghandproject.entity.User;
+import com.example.givinghandproject.jms.NotificationProducer;
 import com.example.givinghandproject.utilities.enums.DonationStatus;
 import com.example.givinghandproject.utilities.enums.UserType;
 import com.example.givinghandproject.utilities.exceptions.BusinessException;
@@ -17,8 +18,9 @@ import jakarta.inject.Inject;
 public class DonationService {
     @Inject private DonationDAO donationDAO;
     @Inject private CampaignItemDAO ciDAO;
-    @Inject
-    private UserDAO userDAO;
+    @Inject private UserDAO userDAO;
+    @Inject private WarehouseService warehouseService;
+    @Inject private NotificationProducer notificationProducer;
 
     public Long commitDonation(DonationRequestDTO dto, String email) {
         User donor = userDAO.getByEmail(email)
@@ -60,36 +62,59 @@ public class DonationService {
 
     public void markAsReceived(Long id) {
         Donation donation = donationDAO.findById(id);
+
+        if (donation == null) {
+            throw new BusinessException("Not Found", "Donation record not found.");
+        }
+
         if (donation.getStatus() != DonationStatus.COMMITTED) {
             throw new BusinessException("Status", "Only committed donations can be marked as received.");
         }
 
         donation.setStatus(DonationStatus.RECEIVED);
 
-        CampaignItem ci = donation.getCampaignItem();
-        ci.setReceivedQuantity(ci.getReceivedQuantity() + donation.getQuantity());
+        Long warehouseId = donation.getCampaignItem().getCampaign().getOrganization().getWarehouse().getId();
+        Long itemId = donation.getCampaignItem().getItem().getId();
+
+        warehouseService.addOrUpdateInventory(
+                warehouseId,
+                itemId,
+                donation.getQuantity(),
+                10
+        );
+
+        notificationProducer.sendEvent(
+                "DONATION_RECEIVED",
+                "Your donation of " + donation.getQuantity() + " " + donation.getCampaignItem().getItem().getName() + " has been received.",
+                donation.getDonor().getEmail()
+        );
 
         donationDAO.update(donation);
-        ciDAO.update(ci);
     }
 
     public void markAsDistributed(Long id) {
         Donation donation = donationDAO.findById(id);
+
+        if (donation == null) {
+            throw new BusinessException("Not Found", "Donation record not found.");
+        }
+
         if (donation.getStatus() != DonationStatus.RECEIVED) {
-            throw new BusinessException("Status", "Donation must be RECEIVED before distribution.");
+            throw new BusinessException("Status", "Donation must be RECEIVED before it can be distributed.");
         }
 
         donation.setStatus(DonationStatus.DISTRIBUTED);
 
         User donor = donation.getDonor();
         String logEntry = "Distributed " + donation.getQuantity() + " of " +
-                donation.getCampaignItem().getItem().getName();
+                donation.getCampaignItem().getItem().getName() +
+                " for campaign: " + donation.getCampaignItem().getCampaign().getTitle();
+
         donor.getDonationLogHistory().add(logEntry);
 
         donationDAO.update(donation);
         userDAO.update(donor);
     }
-
     private Donation findAndCheckOwnership(Long id, User user) {
         Donation d = donationDAO.findById(id);
         if (d == null) throw new BusinessException("Not Found", "Donation not found");

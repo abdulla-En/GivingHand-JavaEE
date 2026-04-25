@@ -1,0 +1,9 @@
+$kind: http-request
+name: Get Dashboard
+method: GET
+url: '{{baseUrl}}/api/warehouse/dashboard'
+order: 3000
+description: Returns the warehouse dashboard with inventory details. Requires Organization role.
+headers:
+  - key: Cookie
+    value: 'JSESSIONID={{token}}'

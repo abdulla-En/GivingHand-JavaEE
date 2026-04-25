@@ -1,0 +1,15 @@
+$kind: http-request
+name: Setup Warehouse
+method: POST
+url: '{{baseUrl}}/api/warehouse/setup'
+order: 1000
+description: Creates/sets up a warehouse for the organization. Requires Organization role.
+headers:
+  - key: Cookie
+    value: 'JSESSIONID={{token}}'
+body:
+  type: json
+  content: |-
+    {
+      "name": "Main Warehouse"
+    }

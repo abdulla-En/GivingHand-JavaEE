@@ -1,0 +1,17 @@
+$kind: http-request
+name: Allocate Resources
+method: POST
+url: '{{baseUrl}}/api/warehouse/allocate'
+order: 2000
+description: Allocates inventory items to a campaign item. Requires Organization role.
+headers:
+  - key: Cookie
+    value: 'JSESSIONID={{token}}'
+body:
+  type: json
+  content: |-
+    {
+      "inventoryItemId": 1,
+      "campaignItemId": 1,
+      "quantity": 10
+    }
