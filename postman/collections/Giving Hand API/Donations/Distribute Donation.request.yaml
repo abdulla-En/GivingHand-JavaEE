@@ -1,0 +1,12 @@
+$kind: http-request
+name: Distribute Donation
+description: |-
+  Marks a donation as distributed and logs it in the donor's history. Requires Organization or Admin role.
+  The request must include a valid session cookie (JSESSIONID).
+method: PATCH
+url: '{{baseUrl}}/api/donations/{{donationId}}/distribute'
+order: 1777103267334
+headers:
+  - key: Cookie
+    value: 'JSESSIONID={{token}}'
+    description: Session cookie for authentication (Organization or Admin role required)

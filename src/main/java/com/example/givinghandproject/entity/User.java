@@ -1,6 +1,7 @@
 package com.example.givinghandproject.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.givinghandproject.utilities.enums.UserType;
@@ -33,6 +34,14 @@ public class User {
     @Column(name = "Role" , nullable = false)
     @Enumerated(EnumType.STRING) // saved in DB as String
     private UserType role;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "user_donation_history",
+            joinColumns = @JoinColumn(name = "user_id")
+    )
+    @Column(name = "log_entry")
+    private List<String> donationLogHistory = new ArrayList<>();
 
     // Navigation properties
     @OneToMany(mappedBy = "organization")
@@ -71,6 +80,9 @@ public class User {
     public UserType getRole() { return role; }
     public void setRole(UserType role) { this.role = role; }
 
+    // for Donation
+
+
     // setters and getters for navigation relations
 
     public List<Campaign> getCampaigns() {
@@ -95,5 +107,13 @@ public class User {
 
     public void setDonations(List<Donation> donations) {
         this.donations = donations;
+    }
+
+    // Donation requirement
+    public void setDonationLogHistory(List<String> donationLogHistory) {
+        this.donationLogHistory = donationLogHistory;
+    }
+    public List<String> getDonationLogHistory() {
+        return donationLogHistory;
     }
 }

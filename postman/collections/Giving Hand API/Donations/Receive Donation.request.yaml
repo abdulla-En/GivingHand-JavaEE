@@ -1,0 +1,12 @@
+$kind: http-request
+name: Receive Donation
+description: |-
+  Marks a donation as received and updates the campaign progress. Requires Organization or Admin role.
+  The request must include a valid session cookie (JSESSIONID).
+method: PATCH
+url: '{{baseUrl}}/api/donations/{{donationId}}/receive'
+order: 1777103267333
+headers:
+  - key: Cookie
+    value: 'JSESSIONID={{token}}'
+    description: Session cookie for authentication (Organization or Admin role required)

@@ -1,0 +1,12 @@
+$kind: http-request
+name: Cancel Donation
+description: |-
+  Cancels an existing donation by ID. Requires Donor role.
+  The request must include a valid session cookie (JSESSIONID).
+method: DELETE
+url: '{{baseUrl}}/api/donations/{{donationId}}'
+order: 1777103267332
+headers:
+  - key: Cookie
+    value: 'JSESSIONID={{token}}'
+    description: Session cookie for authentication (Donor role required)

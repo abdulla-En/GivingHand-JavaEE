@@ -5,6 +5,8 @@ import com.example.givinghandproject.dto.User.UserResponse;
 import com.example.givinghandproject.dto.User.UserUpdateRequest;
 import com.example.givinghandproject.entity.User;
 
+import java.util.ArrayList;
+
 public class UserMapper {
 
     public static User toUser(UserRegisterRequest dto)
@@ -32,7 +34,8 @@ public class UserMapper {
         response.setRole(user.getRole());
         response.setBio(user.getBio());
         response.setBirthDate(user.getBirthDate());
-
+        //Donation history adding
+        response.setHistory(new ArrayList<>(user.getDonationLogHistory()));
         return response;
     }
 

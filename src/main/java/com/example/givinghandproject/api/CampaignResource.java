@@ -49,7 +49,6 @@ public class CampaignResource {
     @PATCH
     @Path("/{id}/status")
     @RolesAllowed({"Organization", "Admin"})
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateStatus(@PathParam("id") Long id, String status) {
         User currentUser = getCurrentUser();
         String title = campaignService.updateCampaignStatus(id, status, currentUser);
@@ -60,7 +59,6 @@ public class CampaignResource {
     @PUT
     @Path("/{id}/resources")
     @RolesAllowed({"Organization", "Admin"})
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response updateResources(@PathParam("id") Long id, CampaignListUpdateDTO dto) {
         User currentUser = getCurrentUser();
         String message = campaignService.updateCampaignRequiredResources(id, currentUser, dto);

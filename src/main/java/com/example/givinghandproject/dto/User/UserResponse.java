@@ -3,6 +3,8 @@ package com.example.givinghandproject.dto.User;
 import com.example.givinghandproject.utilities.enums.UserType;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserResponse {
     private String fullName;
@@ -17,6 +19,7 @@ public class UserResponse {
 
     private UserType role;
 
+    private List<String> history = new ArrayList<>();
 
     // Getters and Setters to JSON Ser&Des
 
@@ -40,4 +43,11 @@ public class UserResponse {
     public UserType getRole() { return role; }
     public void setRole(UserType role) { this.role = role; }
 
+    public void setHistory(List<String> history) {
+        this.history = history;
+    }
+
+    public List<String> getHistory() {
+        return history;
+    }
 }

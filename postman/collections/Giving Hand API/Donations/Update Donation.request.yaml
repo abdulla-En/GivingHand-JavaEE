@@ -1,0 +1,21 @@
+$kind: http-request
+name: Update Donation
+description: |-
+  Updates the quantity of an existing donation. Requires Donor role.
+  The request must include a valid session cookie (JSESSIONID).
+method: PUT
+url: '{{baseUrl}}/api/donations/{{donationId}}'
+order: 1777103267331
+headers:
+  - key: Cookie
+    value: 'JSESSIONID={{token}}'
+    description: Session cookie for authentication (Donor role required)
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "campaignItemId": 1,
+      "quantity": 20
+    }
